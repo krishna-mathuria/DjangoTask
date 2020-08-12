@@ -106,6 +106,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 587
 
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
