@@ -39,7 +39,7 @@ class UserList(generics.ListAPIView):
 
 
 class ResetPassword(APIView):
-    permission_classes = [AllowAny]
+
     def post(self, request, uid, token):
         try:
             new_password = request.data['new_password']
