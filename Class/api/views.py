@@ -16,6 +16,11 @@ User=get_user_model()
 
 @api_view(['POST'])
 def AddGroup(request):
+    """
+    This add the authenticated user to the group as per the request.
+    Request: POST
+    Data: {group}
+    """
     if request.method == 'POST':
         my_group = Group.objects.get(name=request.data['group']) 
         my_group.user_set.add(request.user)
@@ -25,6 +30,11 @@ def AddGroup(request):
 
 @method_decorator(authenticate_users(allowed_groups=["Teacher"]), name="get")
 class StudentList(generics.ListAPIView):
+    """
+    This displays the list of all the users enrolled as students in the database
+    Only Teachers can access this endpoint
+    Request: GET
+    """
     serializer_class=StudentSerializer
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
@@ -33,13 +43,23 @@ class StudentList(generics.ListAPIView):
 
 @method_decorator(authenticate_users(allowed_groups=["Super-admin"]), name="get")
 class UserList(generics.ListAPIView):
+    """
+    This displays the list of all the users in the database with complete details
+    Only Super-admins can access this endpoint
+    Request: GET
+    """
     serializer_class=UserSerializer
     permission_classes=[IsAuthenticated]
     queryset = User.objects.all()
 
 
 class ResetPassword(APIView):
-
+    """
+    This view is to send a reset password request to the corresponding url
+    when the users go to the link received on their email
+    Request: POST 
+    Data: {new_password, re_new_password)
+    """
     def post(self, request, uid, token):
         try:
             new_password = request.data['new_password']
