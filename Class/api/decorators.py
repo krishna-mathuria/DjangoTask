@@ -1,24 +1,17 @@
 from rest_framework.response import Response
 from rest_framework import status
 
-def authenticate_users(allowed_roles=[]):
+def authenticate_users(allowed_groups=[]):
     """
         decorator to authenticate users to particular model;
-        named _partners becuase it will be mostly app specific
+        will determine the the group that can access the particular endpoint
     """
 
     def decorator(view_func):
         def wrapper_func(request, *args, **kwargs):
-            # print("working")
-            group = allowed_roles[0]
-            # print(request.user)
-            # print(group)
-            # print(request.user.groups.all())
-            # print(request.user)
+            group = allowed_groups[0]
             group_list = [group.name for group in request.user.groups.all()]
             if group in group_list:
-                # print(allowed_roles)
-                # print("working")
                 return view_func(request, *args, **kwargs)
             else:
                 return Response(

@@ -1,7 +1,7 @@
  
 """
     PLEASE RUN THIS COMMAND ONLY AFTER DB MIGRATION HAS BEEN COMPLETED
-    WHENEVER NUMBER OF USER ROLE INCREASES ADD HERE ALSO
+    WHENEVER NUMBER OF USER GROUPS INCREASES ADD HERE ALSO
 """
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group

@@ -23,7 +23,7 @@ def AddGroup(request):
 
 
 
-@method_decorator(authenticate_users(allowed_roles=["Teacher"]), name="get")
+@method_decorator(authenticate_users(allowed_groups=["Teacher"]), name="get")
 class StudentList(generics.ListAPIView):
     serializer_class=StudentSerializer
     permission_classes = [IsAuthenticated]
@@ -31,7 +31,7 @@ class StudentList(generics.ListAPIView):
         return User.objects.filter(groups__name='Student')
 
 
-@method_decorator(authenticate_users(allowed_roles=["Super-admin"]), name="get")
+@method_decorator(authenticate_users(allowed_groups=["Super-admin"]), name="get")
 class UserList(generics.ListAPIView):
     serializer_class=UserSerializer
     permission_classes=[IsAuthenticated]
