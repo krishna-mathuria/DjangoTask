@@ -6,7 +6,9 @@ from rest_framework.decorators import api_view
 from .decorators import authenticate_users
 from django.contrib.auth import get_user_model
 from django.utils.decorators import method_decorator
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.views import APIView
+import requests
 from .serializer import UserSerializer, StudentSerializer
 # Create your views here.
 
@@ -34,3 +36,19 @@ class UserList(generics.ListAPIView):
     serializer_class=UserSerializer
     permission_classes=[IsAuthenticated]
     queryset = User.objects.all()
+
+
+class ResetPassword(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request, uid, token):
+        try:
+            new_password = request.data['new_password']
+            re_new_password = request.data['re_new_password']
+            protocol = 'https://' if request.is_secure() else 'http://'
+            web_url = protocol + request.get_host()
+            post_url = web_url + "/auth/users/reset_password_confirm/"
+            post_data = {'uid': uid, 'token': token,'new_password':new_password,'re_new_password':re_new_password}
+            result = requests.post(post_url, data = post_data)
+            return Response(result)
+        except Exception as e:
+            return Response(str(e))
