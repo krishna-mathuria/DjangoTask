@@ -9,6 +9,7 @@ from django.utils.decorators import method_decorator
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 import requests
+from django.shortcuts import redirect
 from .serializer import UserSerializer, StudentSerializer
 # Create your views here.
 
@@ -26,7 +27,8 @@ def AddGroup(request):
         my_group.user_set.add(request.user)
         return Response("Successfully added")
 
-
+def Home(request):
+    return redirect('/auth/jwt/create/')
 
 @method_decorator(authenticate_users(allowed_groups=["Teacher"]), name="get")
 class StudentList(generics.ListAPIView):

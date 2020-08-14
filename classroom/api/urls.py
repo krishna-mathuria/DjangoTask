@@ -1,6 +1,6 @@
 from django.urls import include
 from django.conf.urls import url 
-from .views import AddGroup, StudentList,UserList, ResetPassword
+from .views import AddGroup, StudentList,UserList, ResetPassword,Home
 
 
 urlpatterns = [
@@ -9,7 +9,8 @@ urlpatterns = [
     url(r'^addgroup/', AddGroup),                                                               #add the user to the specified group
     url(r'^students', StudentList.as_view()),                                                   #List of all students for the teachers
     url(r'allusers', UserList.as_view()),                                                       #List of all the users for Super-admins
-    url(r'^password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$',ResetPassword.as_view()) #The url that would be mailed to users opting to reset the password
+    url(r'^password/reset/confirm/(?P<uid>[\w-]+)/(?P<token>[\w-]+)/$',ResetPassword.as_view()), #The url that would be mailed to users opting to reset the password
+    url(r'^', Home)
 ]
 
 """
