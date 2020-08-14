@@ -19,7 +19,7 @@ def AddGroup(request):
     """
     This add the authenticated user to the group as per the request.
     Request: POST
-    Data: {group}
+    Data: {"group":"<the group you want to add the authenticated user>"}
     """
     if request.method == 'POST':
         my_group = Group.objects.get(name=request.data['group']) 
@@ -58,7 +58,8 @@ class ResetPassword(APIView):
     This view is to send a reset password request to the corresponding url
     when the users go to the link received on their email
     Request: POST 
-    Data: {new_password, re_new_password)
+    Data: {"new_password": "<your_new_password>", 
+            "re_new_password": "<re enter the password>"}
     """
     def post(self, request, uid, token):
         try:
